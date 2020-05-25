@@ -28,41 +28,53 @@
 
         function jumun_ok() {
 
-        let name = $('#order_name').val();
-        let count = $('#order_count').val();
-        let address = $('#order_address').val();
-        let phone = $('#order_phone').val();
+            let name = $('#order_name').val();
+            let count = $('#order_count').val();
+            let address = $('#order_address').val();
+            let phone = $('#order_phone').val();
 
-        if (name == ''){
-          alert('이름을 입력해주세요')
-          $('#order_name').focus()
-          return
-        } else if (count == ''){
-          alert('수량을 입력해주세요')
-          $('#order_count').focus()
-          return
-        } else if (address == ''){
-          alert('주소를 입력해주세요')
-          $('#order_address').focus()
-          return
-        } else if (phone == ''){
-          alert('휴대폰번호를 입력해주세요')
-          $('#order_phone').focus()
-          return
-        } 
-        
-        $.ajax({
-          type: "POST",
-          url: "http://spartacodingclub.shop/order",
-          data: { name_give:name, count_give:count, address_give:address, phone_give:phone },
-          success: function(response){
-            if(response['result'] == 'success'){
-              alert('주문이 완료되었습니다!');
-              window.location.reload();
+            if (name == '') {
+                alert('이름을 입력해주세요')
+                $('#order_name').focus()
+                return
+            } else if (count == '') {
+                alert('수량을 입력해주세요')
+                $('#order_count').focus()
+                return
+            } else if (address == '') {
+                alert('주소를 입력해주세요')
+                $('#order_address').focus()
+                return
+            } else if (phone == '') {
+                alert('휴대폰번호를 입력해주세요')
+                $('#order_phone').focus()
+                return
             }
-          }
-        })
 
+        }
+
+
+        $(document).ready(function () {
+            $('#orders-box').empty();
+            set_exchange();
+
+        });
+
+        function set_exchange() {
+            $.ajax({
+                type: "GET",
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {},
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i]['name'] == 'USDKRW=X') {
+                            $('#exchange').text(response[i]['rate']);
+                            return;
+                        }
+                    }
+
+                }
+            })
         }
 
     </script>
@@ -82,11 +94,11 @@
         }
 
         .wrap_jumum {
-            
-          margin: 600px auto;
-          padding: 500px;
-          width: 700px;
-        
+
+            margin: 600px auto;
+            padding: 100px;
+            width: 700px;
+
         }
     </style>
     <style>
@@ -137,75 +149,80 @@
             <p>
                 <h1 style="display: inline;">아이언맨 슈트를 팝니다.</h1>
                 <p style="display: inline;"> 가격: 1,000,000원 / 개당</p>
+
             </p>
             <p>
                 이 상품은 아이언맨의 주인공인 토니스타크가 수작업으로 제작하였으며 공격과 방어에 최상의 기술을 반영하여 설계하였습니다.
             </p>
             <p></p>
+            <div class="info-temp">달러-원 환율: <span id="exchange"> </span></div>
+        </div>
+        <h1></h1>
+        <h1 style="display: inline;">주문하기</h1>
 
-            <h1 style="display: inline;">주문하기</h1>
 
 
-
-            <div>
-                <div class="form-group row">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">주문자 성함:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="order_name" placeholder="이름 입력">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">수량 선택:</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="order_count">
-                            <option selected>수량선택</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">주소:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="order_address" placeholder="주소 입력">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="colFormLabel" class="col-sm-2 col-form-label">전화번호:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="order_phone" placeholder="휴대전화번호 입력">
-                    </div>
+        <div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">주문자 성함:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="order_name" placeholder="이름 입력">
                 </div>
             </div>
-            <div class="wrap_jumun">
-                <button type="submit" onclick="jumun_ok()" class="btn btn-primary">주문하기</button>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">수량 선택:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="order_count">
+                        <option selected>수량선택</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
             </div>
-            <div class="orders">
-                <table class="table">
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">주소:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="order_address" placeholder="주소 입력">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">전화번호:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="order_phone" placeholder="휴대전화번호 입력">
+                </div>
+            </div>
+        </div>
+        <div class="wrap_jumun">
+            <button type="submit" onclick="jumun_ok()" class="btn btn-primary">주문하기</button>
+        </div>
+
+        <div class="orders">
+
+            <table class="table">
                 <thead>
-                  <tr>
+
                     <th scope="col">이름</th>
                     <th scope="col">수량</th>
                     <th scope="col">주소</th>
                     <th scope="col">전화번호</th>
-                  </tr>
+
                 </thead>
                 <tbody id="orders-box">
-                  <tr>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  
+                    <tr>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+
                 </tbody>
-              </table>
-              </div>
-            </div>
+            </table>
         </div>
+
     </div>
-    
+    </div>
+
 
 
 
