@@ -75,20 +75,30 @@
         }
 
         .wrap_text {
-
+            width: 700px;
             margin: 20px auto;
             font-family: 'Do Hyeon', sans-serif;
 
         }
 
-        .wrap_jumum {
+        .button1 {
             
-          margin: 600px auto;
-          padding: 500px;
-          width: 700px;
+            margin: 0 auto;
+            width: 100px;
+            padding:1%;
+            font-family: 'Do Hyeon', sans-serif;
+        
+        }
+
+        .orders {
+            
+            width: 700px;
+            margin: 20px auto;
+            font-family: 'Do Hyeon', sans-serif;
         
         }
     </style>
+
     <style>
         * {
             font-family: 'Stylish', sans-serif;
@@ -132,8 +142,8 @@
             </a>
 
         </div>
-
-        <div class=wrap_text>
+    </div>
+    <div class=wrap_text>
             <p>
                 <h1 style="display: inline;">아이언맨 슈트를 팝니다.</h1>
                 <p style="display: inline;"> 가격: 1,000,000원 / 개당</p>
@@ -143,8 +153,7 @@
             </p>
             <p></p>
 
-            <h1 style="display: inline;">주문하기</h1>
-
+            <h1 style="display: inline;"> 주문하기</h1>
 
 
             <div>
@@ -178,10 +187,14 @@
                     </div>
                 </div>
             </div>
-            <div class="wrap_jumun">
-                <button type="submit" onclick="jumun_ok()" class="btn btn-primary">주문하기</button>
-            </div>
-            <div class="orders">
+    </div>
+
+
+    <div class="button1">
+         <button type="submit" onclick="jumun_ok()" class="btn btn-primary">주문하기</button>
+    </div>
+    
+    <div class="orders">
                 <table class="table">
                 <thead>
                   <tr>
@@ -202,9 +215,9 @@
                 </tbody>
               </table>
               </div>
-            </div>
-        </div>
     </div>
+        
+    
     
 
 
